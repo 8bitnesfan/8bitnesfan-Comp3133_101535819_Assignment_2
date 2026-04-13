@@ -1,0 +1,15 @@
+<h2>Login</h2>
+
+<form>
+  <input [(ngModel)]="email" placeholder="Email">
+  <input [(ngModel)]="password" type="password" placeholder="Password">
+
+  <button type="button" routerLink="/employees">
+    Login
+  </button>
+
+  <p>
+    No account?
+    <a routerLink="/signup">Signup</a>
+  </p>
+</form>
