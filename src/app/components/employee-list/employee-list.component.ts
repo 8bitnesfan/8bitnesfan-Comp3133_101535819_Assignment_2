@@ -17,21 +17,22 @@ export class EmployeeListComponent implements OnInit {
   get filteredEmployees() {
     if (!Array.isArray(this.employees)) return [];
 
-    const search = (this.searchText || '').toLowerCase().trim();
+    const searchWords = (this.searchText || '')
+      .toLowerCase()
+      .trim()
+      .split(/\s+/); // split by spaces
 
     return this.employees.filter(emp => {
       const firstName = (emp.first_name || '').toLowerCase();
       const lastName = (emp.last_name || '').toLowerCase();
       const fullName = `${firstName} ${lastName}`.trim();
-      const department = (emp.department || '').toLowerCase();
-      const position = (emp.position || '').toLowerCase();
+      const department = String(emp.department || '').toLowerCase();
+      const position = String(emp.position || '').toLowerCase();
 
-      return (
-        firstName.includes(search) ||
-        lastName.includes(search) ||
-        fullName.includes(search) ||
-        department.includes(search) ||
-        position.includes(search)
+      const fields = [firstName, lastName, fullName, department, position];
+
+      return searchWords.every(word =>
+        fields.some(field => field.includes(word))
       );
     });
   }
