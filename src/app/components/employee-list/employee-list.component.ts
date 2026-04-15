@@ -20,16 +20,15 @@ export class EmployeeListComponent implements OnInit {
     const searchWords = (this.searchText || '')
       .toLowerCase()
       .trim()
-      .split(/\s+/); // split by spaces
+      .split(/\s+/);
 
     return this.employees.filter(emp => {
       const firstName = (emp.first_name || '').toLowerCase();
       const lastName = (emp.last_name || '').toLowerCase();
-      const fullName = `${firstName} ${lastName}`.trim();
+      const fullName = `${firstName} ${lastName}`.toLowerCase();
       const department = String(emp.department || '').toLowerCase();
-      const position = String(emp.position || '').toLowerCase();
-
-      const fields = [firstName, lastName, fullName, department, position];
+      const designation = String(emp.designation || '').toLowerCase();
+      const fields = [firstName, lastName, fullName, department, designation];
 
       return searchWords.every(word =>
         fields.some(field => field.includes(word))

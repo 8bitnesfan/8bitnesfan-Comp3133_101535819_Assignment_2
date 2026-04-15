@@ -62,23 +62,25 @@ export class EmployeeService {
 
   getEmployees(): Observable<any[]> {
     const query = `
-      query {
-        getEmployees {
-          id
-          first_name
-          last_name
-          email
-        }
+    query {
+      getEmployees {
+        id
+        first_name
+        last_name
+        email
+        department
+        designation
       }
-    `;
+    }
+  `;
 
     return this.http.post<any>(
       this.url,
       { query },
-      { headers: { 'Content-Type': 'application/json' } } // optional but safe
+      { headers: { 'Content-Type': 'application/json' } }
     ).pipe(
       map(res => {
-        console.log('GraphQL RESPONSE:', res); // debug
+        console.log('GraphQL RESPONSE:', res);
         return res.data.getEmployees || [];
       })
     );
