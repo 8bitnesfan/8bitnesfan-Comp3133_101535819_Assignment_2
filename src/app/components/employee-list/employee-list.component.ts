@@ -17,7 +17,7 @@ export class EmployeeListComponent implements OnInit {
   get filteredEmployees() {
     if (!Array.isArray(this.employees)) return [];
 
-    const search = this.searchText.toLowerCase();
+    const search = (this.searchText || '').toLowerCase().trim();
 
     return this.employees.filter(emp => {
       const firstName = (emp.first_name || '').toLowerCase();
