@@ -17,7 +17,12 @@ export class AddEmployeeComponent {
     private router: Router
   ) {}
 
-  save() {
+  save(form: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
     const emp = {
       ...this.employee,
       salary: Number(this.employee.salary),

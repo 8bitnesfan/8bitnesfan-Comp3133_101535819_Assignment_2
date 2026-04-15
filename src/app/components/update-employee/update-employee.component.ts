@@ -27,9 +27,19 @@ export class UpdateEmployeeComponent implements OnInit {
     });
   }
 
-  update() {
-    this.empService.updateEmployee(this.id, this.employee).subscribe(() => {
-      this.router.navigate(['/employees']);
+  update(form: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
+    this.empService.updateEmployee(this.id, this.employee).subscribe({
+      next: () => {
+        this.router.navigate(['/employees']);
+      },
+      error: (err) => {
+        console.error("UPDATE FAILED:", err);
+      }
     });
   }
 }

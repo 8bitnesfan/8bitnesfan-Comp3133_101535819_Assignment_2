@@ -1,13 +1,83 @@
 <div class="form-container">
+
   <h2>Add Employee</h2>
 
-  <input [(ngModel)]="employee.first_name" name="first_name" placeholder="First Name">
-  <input [(ngModel)]="employee.last_name" name="last_name" placeholder="Last Name">
-  <input [(ngModel)]="employee.email" name="email" placeholder="Email">
-  <input [(ngModel)]="employee.designation" name="designation" placeholder="Designation">
-  <input [(ngModel)]="employee.department" name="department" placeholder="Department">
-  <input [(ngModel)]="employee.salary" name="salary" placeholder="Salary">
-  <input [(ngModel)]="employee.date_of_joining" name="date_of_joining" placeholder="Date of Joining">
+  <form #empForm="ngForm" (ngSubmit)="save(empForm)" style="width:100%; display:flex; flex-wrap:wrap; gap:10px;">
 
-  <button (click)="save()">Save</button>
+    <input
+      [(ngModel)]="employee.first_name"
+      name="first_name"
+      placeholder="First Name"
+      required
+      minlength="2"
+      pattern="^[A-Za-z\s]+$"
+      #firstName="ngModel"
+    />
+    <small style="color: red" *ngIf="firstName.touched && firstName.invalid">
+      Invalid first name
+    </small>
+
+    <input
+      [(ngModel)]="employee.last_name"
+      name="last_name"
+      placeholder="Last Name"
+      required
+      minlength="2"
+      pattern="^[A-Za-z\s]+$"
+      #lastName="ngModel"
+    />
+    <small style="color: red" *ngIf="lastName.touched && lastName.invalid">
+      Invalid last name
+    </small>
+
+    <input
+      [(ngModel)]="employee.email"
+      name="email"
+      placeholder="Email"
+      required
+      email
+      #email="ngModel"
+    />
+    <small style="color: red" *ngIf="email.touched && email.invalid">
+      Invalid email
+    </small>
+
+    <input
+      [(ngModel)]="employee.designation"
+      name="designation"
+      placeholder="Designation"
+      required
+      minlength="2"
+    />
+
+    <input
+      [(ngModel)]="employee.department"
+      name="department"
+      placeholder="Department"
+      required
+    />
+
+    <input
+      [(ngModel)]="employee.salary"
+      name="salary"
+      placeholder="Salary"
+      required
+      type="number"
+      min="30000"
+      max="500000"
+    />
+
+    <input
+      [(ngModel)]="employee.date_of_joining"
+      name="date_of_joining"
+      type="date"
+      required
+    />
+
+    <button type="submit" [disabled]="empForm.invalid">
+      Save
+    </button>
+
+  </form>
+
 </div>

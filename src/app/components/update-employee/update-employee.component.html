@@ -1,11 +1,80 @@
 <div class="form-container">
   <h2>Update Employee</h2>
 
-  <input [(ngModel)]="employee.first_name" placeholder="First Name">
-  <input [(ngModel)]="employee.last_name" placeholder="Last Name">
-  <input [(ngModel)]="employee.email" placeholder="Email">
-  <input [(ngModel)]="employee.designation" placeholder="Designation">
-  <input [(ngModel)]="employee.department" placeholder="Department">
+  <form #empForm="ngForm" (ngSubmit)="update(empForm)" style="width:100%; display:flex; flex-wrap:wrap; gap:10px;">
 
-  <button (click)="update()">Update</button>
+    <input
+      [(ngModel)]="employee.first_name"
+      name="first_name"
+      placeholder="First Name"
+      required
+      minlength="2"
+      pattern="^[A-Za-z\\s]+$"
+      #firstName="ngModel"
+    />
+    <small style="color: red" *ngIf="firstName.touched && firstName.invalid">
+      Invalid first name
+    </small>
+
+    <input
+      [(ngModel)]="employee.last_name"
+      name="last_name"
+      placeholder="Last Name"
+      required
+      minlength="2"
+      pattern="^[A-Za-z\\s]+$"
+      #lastName="ngModel"
+    />
+    <small style="color: red" *ngIf="lastName.touched && lastName.invalid">
+      Invalid last name
+    </small>
+
+    <input
+      [(ngModel)]="employee.email"
+      name="email"
+      placeholder="Email"
+      required
+      email
+      #email="ngModel"
+    />
+    <small style="color: red" *ngIf="email.touched && email.invalid">
+      Invalid email
+    </small>
+
+    <input
+      [(ngModel)]="employee.designation"
+      name="designation"
+      placeholder="Designation"
+      required
+      minlength="2"
+    />
+
+    <input
+      [(ngModel)]="employee.department"
+      name="department"
+      placeholder="Department"
+      required
+      minlength="2"
+    />
+
+    <input
+      [(ngModel)]="employee.salary"
+      name="salary"
+      placeholder="Salary"
+      type="number"
+      required
+      min="30000"
+      max="500000"
+      #salary="ngModel"
+    />
+
+    <small *ngIf="salary.touched && salary.invalid">
+      Salary must be between 30000 and 500000
+    </small>
+
+    <button type="submit" [disabled]="empForm.invalid">
+      Update
+    </button>
+
+  </form>
 </div>
