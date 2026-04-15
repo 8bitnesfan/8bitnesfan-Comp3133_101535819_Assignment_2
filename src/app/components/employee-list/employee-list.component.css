@@ -13,6 +13,12 @@ thead {
   color: white;
 }
 
+input{
+  margin: 10px auto;
+  border-radius: 8px;
+  margin-left: 95px;
+}
+
 th, td {
   padding: 12px 15px;
   text-align: left;

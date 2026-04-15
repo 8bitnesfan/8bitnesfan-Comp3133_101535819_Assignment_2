@@ -6,6 +6,12 @@
   </button>
 </div>
 
+<input
+  type="text"
+  placeholder="Search Employee"
+  [(ngModel)]="searchText"
+/>
+
 <table>
   <thead>
   <tr>
@@ -16,7 +22,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let emp of employees">
+  <tr *ngFor="let emp of filteredEmployees">
     <td>{{ emp.first_name }} {{ emp.last_name }}</td>
     <td>{{ emp.department }}</td>
     <td>{{ emp.designation }}</td>

@@ -11,7 +11,31 @@ import { AuthService } from '../../services/auth.service';
 })
 export class EmployeeListComponent implements OnInit {
 
+  searchText: string = '';
   employees: any[] = [];
+
+  get filteredEmployees() {
+    if (!Array.isArray(this.employees)) return [];
+
+    const search = this.searchText.toLowerCase();
+
+    return this.employees.filter(emp => {
+      const firstName = (emp.first_name || '').toLowerCase();
+      const lastName = (emp.last_name || '').toLowerCase();
+      const fullName = `${firstName} ${lastName}`.trim();
+      const department = (emp.department || '').toLowerCase();
+      const position = (emp.position || '').toLowerCase();
+
+      return (
+        firstName.includes(search) ||
+        lastName.includes(search) ||
+        fullName.includes(search) ||
+        department.includes(search) ||
+        position.includes(search)
+      );
+    });
+  }
+
 
   constructor(
     private empService: EmployeeService,
