@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private url = 'http://localhost:4000/graphql';
+  private url = 'https://comp3133-101535819-assignment-1.onrender.com/graphql';
 
   constructor(private http: HttpClient) {}
 
