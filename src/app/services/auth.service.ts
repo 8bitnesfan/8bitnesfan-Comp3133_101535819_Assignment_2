@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private url = 'http://localhost:4000/graphql';
+  private url = 'https://comp3133-101535819-assignment-1.onrender.com/graphql';
   private tokenKey = 'auth_token';
   private _isLoggedIn = new BehaviorSubject<boolean>(!!localStorage.getItem(this.tokenKey));
 
