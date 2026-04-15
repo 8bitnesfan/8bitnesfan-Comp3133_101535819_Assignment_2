@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EmployeeService, Employee } from '../../services/employee.service';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-update-employee',
@@ -10,13 +10,8 @@ import { EmployeeService, Employee } from '../../services/employee.service';
 })
 export class UpdateEmployeeComponent implements OnInit {
 
-  id!: number;
-
-  employee: Omit<Employee, 'id'> = {
-    name: '',
-    department: '',
-    position: ''
-  };
+  id!: string;
+  employee: any = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -25,21 +20,16 @@ export class UpdateEmployeeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.id = this.route.snapshot.paramMap.get('id')!;
 
-    const existing = this.empService.getEmployeeById(this.id);
-
-    if (existing) {
-      this.employee = {
-        name: existing.name,
-        department: existing.department,
-        position: existing.position
-      };
-    }
+    this.empService.getEmployeeById(this.id).subscribe(data => {
+      this.employee = data;
+    });
   }
 
   update() {
-    this.empService.updateEmployee(this.id, this.employee);
-    this.router.navigate(['/employees']);
+    this.empService.updateEmployee(this.id, this.employee).subscribe(() => {
+      this.router.navigate(['/employees']);
+    });
   }
 }

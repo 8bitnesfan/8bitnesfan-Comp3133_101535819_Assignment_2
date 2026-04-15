@@ -1,31 +1,38 @@
 <h2>Employee List</h2>
 
-<button routerLink="/add-employee" style="margin-left: 100px;">Add Employee</button>
+<div class="top-actions">
+  <button routerLink="/add-employee" class="add-btn">
+    Add Employee
+  </button>
+</div>
 
-<table class="employee-table">
+<table>
   <thead>
   <tr>
     <th>Name</th>
     <th>Department</th>
-    <th>Position</th>
+    <th>Designation</th>
     <th>Actions</th>
   </tr>
   </thead>
-
   <tbody>
-    @for (emp of employees; track emp.id) {
-      <tr>
-        <td>{{ emp.name }}</td>
-        <td>{{ emp.department }}</td>
-        <td>{{ emp.position }}</td>
-        <td>
-          <button [routerLink]="['/view-employee', emp.id]">View</button>
-          <button [routerLink]="['/update-employee', emp.id]">Edit</button>
-          <button (click)="deleteEmployee(emp.id)">Delete</button>
-        </td>
-      </tr>
-    }
+  <tr *ngFor="let emp of employees">
+    <td>{{ emp.first_name }} {{ emp.last_name }}</td>
+    <td>{{ emp.department }}</td>
+    <td>{{ emp.designation }}</td>
+    <td>
+      <button [routerLink]="['/view-employee', emp.id]">View</button>
+
+      <button [routerLink]="['/update-employee', emp.id]">Edit</button>
+
+      <button (click)="deleteEmployee(emp.id)">Delete</button>
+    </td>
+  </tr>
   </tbody>
 </table>
 
-<button class="logout-btn" (click)="logout()">Logout</button>
+<div class="bottom-actions">
+  <button (click)="logout()" class="logout-btn">
+    Logout
+  </button>
+</div>

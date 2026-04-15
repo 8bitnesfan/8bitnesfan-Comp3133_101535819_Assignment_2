@@ -1,30 +1,71 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private url = 'http://localhost:4000/graphql';
+  private tokenKey = 'auth_token';
+  private _isLoggedIn = new BehaviorSubject<boolean>(!!localStorage.getItem(this.tokenKey));
 
-  private isLoggedIn = false;
+  isLoggedIn$ = this._isLoggedIn.asObservable();
 
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   login(email: string, password: string) {
-    if (email && password) {
-      this.isLoggedIn = true;
-      localStorage.setItem('token', 'demo-token');
-      this.router.navigate(['/employees']);
-    }
+    const query = `
+      query {
+        login(email: "${email}", password: "${password}") {
+          token
+          user {
+            id
+            username
+            email
+          }
+        }
+      }
+    `;
+
+    return this.http.post<any>(this.url, { query }).pipe(
+      map(res => {
+        const token = res.data.login?.token;
+        if (token) {
+          localStorage.setItem(this.tokenKey, token);
+          this._isLoggedIn.next(true);
+        }
+        return res.data.login;
+      })
+    );
+  }
+
+  signup(username: string, email: string, password: string) {
+    const query = `
+      mutation {
+        signup(input: {
+          username: "${username}",
+          email: "${email}",
+          password: "${password}"
+        }) {
+          id
+          username
+          email
+        }
+      }
+    `;
+    return this.http.post<any>(this.url, { query }).pipe(
+      map(res => res.data.signup)
+    );
   }
 
   logout() {
-    this.isLoggedIn = false;
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    localStorage.removeItem(this.tokenKey);
+    this._isLoggedIn.next(false);
   }
 
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+  getToken() {
+    return localStorage.getItem(this.tokenKey);
   }
 }

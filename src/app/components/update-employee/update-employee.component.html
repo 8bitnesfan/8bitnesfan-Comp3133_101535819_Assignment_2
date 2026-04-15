@@ -1,7 +1,11 @@
-<h2>Update Employee</h2>
+<div class="form-container">
+  <h2>Update Employee</h2>
 
-<input [(ngModel)]="employee.name">
-<input [(ngModel)]="employee.department">
-<input [(ngModel)]="employee.position">
+  <input [(ngModel)]="employee.first_name" placeholder="First Name">
+  <input [(ngModel)]="employee.last_name" placeholder="Last Name">
+  <input [(ngModel)]="employee.email" placeholder="Email">
+  <input [(ngModel)]="employee.designation" placeholder="Designation">
+  <input [(ngModel)]="employee.department" placeholder="Department">
 
-<button (click)="update()">Update</button>
+  <button (click)="update()">Update</button>
+</div>

@@ -1,7 +1,13 @@
-<h2>Add Employee</h2>
+<div class="form-container">
+  <h2>Add Employee</h2>
 
-<input [(ngModel)]="employee.name" placeholder="Name">
-<input [(ngModel)]="employee.department" placeholder="Department">
-<input [(ngModel)]="employee.position" placeholder="Position">
+  <input [(ngModel)]="employee.first_name" name="first_name" placeholder="First Name">
+  <input [(ngModel)]="employee.last_name" name="last_name" placeholder="Last Name">
+  <input [(ngModel)]="employee.email" name="email" placeholder="Email">
+  <input [(ngModel)]="employee.designation" name="designation" placeholder="Designation">
+  <input [(ngModel)]="employee.department" name="department" placeholder="Department">
+  <input [(ngModel)]="employee.salary" name="salary" placeholder="Salary">
+  <input [(ngModel)]="employee.date_of_joining" name="date_of_joining" placeholder="Date of Joining">
 
-<button (click)="save()">Save</button>
+  <button (click)="save()">Save</button>
+</div>

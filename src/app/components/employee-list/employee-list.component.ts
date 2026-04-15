@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { EmployeeService } from '../../services/employee.service';
 import { AuthService } from '../../services/auth.service';
-import { EmployeeService, Employee } from '../../services/employee.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -11,21 +11,37 @@ import { EmployeeService, Employee } from '../../services/employee.service';
 })
 export class EmployeeListComponent implements OnInit {
 
-  employees: Employee[] = [];
+  employees: any[] = [];
 
   constructor(
-    private auth: AuthService,
     private empService: EmployeeService,
-    private router: Router
+    private auth: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.employees = this.empService.getEmployees();
+    this.loadEmployees();
   }
 
-  deleteEmployee(id: number) {
-    this.empService.deleteEmployee(id);
-    this.employees = this.empService.getEmployees(); // refresh view
+  loadEmployees() {
+    this.empService.getEmployees().subscribe(
+      res => {
+        console.log('EMPLOYEES LOADED:', res);
+        this.employees = res;
+        this.cdr.detectChanges();
+      },
+      err => {
+        console.error('LOAD FAILED:', err);
+        this.employees = [];
+      }
+    );
+  }
+
+  deleteEmployee(id: string) {
+    this.empService.deleteEmployee(id).subscribe(() => {
+      this.loadEmployees();
+    });
   }
 
   logout() {

@@ -1,9 +1,17 @@
-<h2>Employee Details</h2>
+<div class="page">
 
-<div class="view-card">
-  <p><strong>Name:</strong> {{ employee?.name }}</p>
-  <p><strong>Department:</strong> {{ employee?.department }}</p>
-  <p><strong>Position:</strong> {{ employee?.position }}</p>
+  <div class="card" *ngIf="employee">
+    <h2>Employee Details</h2>
+
+    <p><strong>Name:</strong> {{ employee.first_name }} {{ employee.last_name }}</p>
+    <p><strong>Email:</strong> {{ employee.email }}</p>
+    <p><strong>Department:</strong> {{ employee.department }}</p>
+    <p><strong>Designation:</strong> {{ employee.designation }}</p>
+    <p *ngIf="employee.salary">
+      <strong>Salary:</strong> {{ employee.salary | currency }}
+    </p>
+
+    <button routerLink="/employees">Back</button>
+  </div>
+
 </div>
-
-<button routerLink="/employees"style="margin-left: 930px;">Back</button>

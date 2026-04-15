@@ -10,10 +10,14 @@ import { EmployeeListComponent } from './components/employee-list/employee-list.
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
 import { UpdateEmployeeComponent } from './components/update-employee/update-employee.component';
 import { ViewEmployeeComponent } from './components/view-employee/view-employee.component';
+import { HttpClientModule } from '@angular/common/http';
+
+
+
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, SignupComponent, EmployeeListComponent, AddEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule ],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [AppComponent],
 })

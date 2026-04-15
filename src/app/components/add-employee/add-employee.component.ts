@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
 
-
 @Component({
   selector: 'app-add-employee',
   standalone: false,
@@ -11,11 +10,7 @@ import { EmployeeService } from '../../services/employee.service';
 })
 export class AddEmployeeComponent {
 
-  employee = {
-    name: '',
-    department: '',
-    position: ''
-  };
+  employee: any = {};
 
   constructor(
     private empService: EmployeeService,
@@ -23,7 +18,13 @@ export class AddEmployeeComponent {
   ) {}
 
   save() {
-    this.empService.addEmployee(this.employee);
-    this.router.navigate(['/employees']);
+    const emp = {
+      ...this.employee,
+      salary: Number(this.employee.salary),
+    };
+
+    this.empService.addEmployee(emp).subscribe(() => {
+      this.router.navigate(['/employees']);
+    });
   }
 }
